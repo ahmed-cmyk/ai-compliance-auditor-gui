@@ -1,4 +1,5 @@
 import streamlit as st
+from langchain_ollama.chat_models import ChatOllama
 
 chat_page = st.Page("pages/chat.py", title="Chat", icon=":material/chat:")
 upload_page = st.Page("pages/upload.py", title="Upload", icon=":material/upload_file:")

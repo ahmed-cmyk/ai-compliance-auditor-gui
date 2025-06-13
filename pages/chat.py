@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.header("Chat", divider=True)
+st.title("Chat")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
