@@ -69,23 +69,30 @@ This setup enables **Retrieval-Augmented Generation (RAG)**, allowing the AI to 
 
 ```
 ai-compliance-auditor/
-├── app.py                 # Main Streamlit GUI application
-├── .streamlit/            # Streamlit configuration files
-│   └── config.toml
-├── data/                  # Local storage for ChromaDB and uploaded files
-│   ├── chromadb/          # Persistent ChromaDB vector database files
-│   └── uploaded_docs/     # Directory for temporary uploaded documents
-├── docs/                  # Sample policy documents (for testing/demo)
-│   └── policies/
-│       └── ...
-├── servers/               # Python scripts for MCP Server processes
-│   ├── ingestion_server.py
-│   ├── analysis_server.py
+├── data/
+│   ├── chromadb/         # Local Chroma DB persistence
+│   └── uploaded_docs/    # Temporary storage for uploaded documents
+├── config/               # New: For application-wide configuration
 │   └── __init__.py
-├── scripts/               # Optional: Helper scripts (e.g., for starting all servers)
-│   └── start_all_servers.sh
-├── .env                   # Environment variables (add to .gitignore!)
-├── .gitignore             # Files/directories to ignore in Git
-├── README.md              # This project's main README file
-└── requirements.txt       # Python package dependencies
+│   └── settings.py       # All app settings (API keys, model names, etc.)
+├── models/               # New: For Pydantic models, custom data structures
+│   └── __init__.py
+│   └── app_models.py     # e.g., for IngestionRequest, QueryResponse
+├── services/             # New: Core reusable functionalities (embedding, vector store, Stagehand client)
+│   ├── __init__.py
+│   ├── embeddings.py
+│   ├── vector_store.py
+│   └── stagehand.py      # Your StagehandClient and related utilities
+├── pipelines/            # New: Orchestrates ingestion and RAG flows
+│   ├── __init__.py
+│   ├── ingestion.py      # Contains all ingestion logic (loaders, splitters, processors)
+│   └── rag.py            # Contains core RAG logic (retrieval, LLM calls, tool orchestration)
+├── main.py               # Streamlit entry point (Home page or just redirects)
+├── pages/
+│   ├── chat.py           # Uses `pipelines.rag`
+│   ├── settings.py       # Interacts with `config.settings`
+│   └── upload.py         # Uses `pipelines.ingestion`
+├── pyproject.toml
+├── README.md
+└── uv.lock
 ```
